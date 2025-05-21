@@ -1,0 +1,9 @@
+export { CreateUserInput } from './create-user.input';
+export { CreatePlaceInput } from './create-place.input';
+export { UpdatePlaceInput } from './update-place.input';
+export { CreateCommentInput } from './create-comment.input';
+export { LoginInput } from './login.input';
+export { RegisterInput } from './register.input';
+export { AuthenticatedUserInput } from './authenticated-user.input';
+export { RepliesResponse } from './replies-response';
+export { CommentsResponse } from './comments-response';
