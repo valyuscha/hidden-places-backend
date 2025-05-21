@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { User } from './entities';
+import { User, Place, Comment, CommentVote } from './entities';
 import { UserModule } from './models/user/user.module';
 import { PlaceModule } from './models/place/place.module';
 import { CommentModule } from './models/comment/comment.module';
@@ -22,9 +22,10 @@ import { UploadModule } from './upload/upload.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
+      entities: [User, Place, Comment, CommentVote],
+      synchronize: false,
       autoLoadEntities: true,
-      synchronize: true,
-      entities: [User],
+      ssl: { rejectUnauthorized: false },
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

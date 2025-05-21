@@ -2,20 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  places: [Place!]
-  comments: [Comment!]
-  createdAt: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Comment {
   id: ID!
   text: String!
@@ -33,6 +19,11 @@ type Comment {
   updatedAt: DateTime!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Place {
   id: ID!
   title: String!
@@ -48,6 +39,15 @@ type Place {
   comments: [Comment!]
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  places: [Place!]
+  comments: [Comment!]
+  createdAt: DateTime!
 }
 
 type CommentVote {

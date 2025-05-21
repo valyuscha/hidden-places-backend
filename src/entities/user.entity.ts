@@ -6,7 +6,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Comment, Place } from './';
+import { Comment } from './comment.entity';
+import { Place } from './place.entity';
 
 @ObjectType()
 @Entity()
