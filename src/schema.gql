@@ -1,0 +1,109 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Comment {
+  createdAt: DateTime!
+  id: ID!
+  place: Place!
+  text: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+input CreateCommentInput {
+  placeId: Int!
+  text: String!
+  userId: Int!
+}
+
+input CreatePlaceInput {
+  city: String!
+  country: String!
+  createdById: Int!
+  description: String
+  imageUrl: String
+  latitude: Float!
+  longitude: Float!
+  tags: [String!]!
+  title: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  createPlace(createPlaceInput: CreatePlaceInput!): Place!
+  createUser(createUserInput: CreateUserInput!): User!
+  login(loginInput: LoginInput!): String!
+  register(registerInput: RegisterInput!): String!
+  removeComment(id: Int!): Boolean!
+  removePlace(id: Int!): Boolean!
+  updateComment(id: Int!, text: String!): Comment!
+  updatePlace(id: Int!, updatePlaceInput: UpdatePlaceInput!): Place!
+}
+
+type Place {
+  city: String!
+  comments: [Comment!]
+  country: String!
+  createdAt: DateTime!
+  createdBy: User!
+  description: String
+  id: ID!
+  imageUrl: String
+  latitude: Float!
+  longitude: Float!
+  tags: [String!]!
+  title: String!
+  updatedAt: DateTime!
+}
+
+type Query {
+  comment(id: Int!): Comment!
+  commentsByPlace(placeId: Int!): [Comment!]!
+  place(id: Int!): Place!
+  places: [Place!]!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input UpdatePlaceInput {
+  city: String
+  country: String
+  description: String
+  imageUrl: String
+  latitude: Float
+  longitude: Float
+  tags: [String!]
+  title: String
+}
+
+type User {
+  comments: [Comment!]
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  name: String!
+  places: [Place!]
+}

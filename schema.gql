@@ -1,0 +1,142 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  places: [Place!]
+  comments: [Comment!]
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Comment {
+  id: ID!
+  text: String!
+  likes: Int!
+  dislikes: Int!
+  votes: [CommentVote!]
+  user: User!
+  place: Place!
+  parentComment: Comment
+  replies: [Comment!]
+  hasMoreReplies: Boolean
+  hasUserLiked: Boolean
+  hasUserDisliked: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Place {
+  id: ID!
+  title: String!
+  description: String
+  country: String!
+  city: String!
+  tags: [String!]!
+  latitude: Float!
+  longitude: Float!
+  imageUrl: String
+  imagePublicId: String
+  createdBy: User!
+  comments: [Comment!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CommentVote {
+  id: ID!
+  isLike: Boolean!
+}
+
+type RepliesResponse {
+  replies: [Comment!]!
+  totalCount: Int!
+}
+
+type CommentsResponse {
+  comments: [Comment!]!
+  totalCount: Int!
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  places(limit: Int = 9, offset: Int = 0, search: String, tags: [String!]): [Place!]!
+  place(id: Int!): Place!
+  comment(id: Int!, userId: Int): Comment!
+  commentsByPlace(placeId: Int!, userId: Int, skip: Int): CommentsResponse!
+  repliesByComment(commentId: Int!, userId: Int, skip: Int, take: Int): RepliesResponse!
+  currentUser: User!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  deleteUser(id: Int!): Boolean!
+  createPlace(createPlaceInput: CreatePlaceInput!): Place!
+  updatePlace(id: Int!, updatePlaceInput: UpdatePlaceInput!): Place!
+  removePlace(id: Int!): Boolean!
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  updateComment(id: Int!, text: String!): Comment!
+  removeComment(id: Int!): Boolean!
+  likeComment(id: Int!): Comment!
+  dislikeComment(id: Int!): Comment!
+  voteComment(userId: Int!, commentId: Int!, isLike: Boolean!): Comment!
+  login(loginInput: LoginInput!): Boolean!
+  register(registerInput: RegisterInput!): Boolean!
+  logout: Boolean!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input CreatePlaceInput {
+  title: String!
+  description: String
+  country: String!
+  city: String!
+  tags: [String!]!
+  latitude: Float!
+  longitude: Float!
+  imageUrl: String
+  imagePublicId: String
+  createdById: Int!
+}
+
+input UpdatePlaceInput {
+  title: String
+  description: String
+  country: String
+  city: String
+  tags: [String!]
+  latitude: Float
+  longitude: Float
+  imageUrl: String
+}
+
+input CreateCommentInput {
+  text: String!
+  userId: Int!
+  placeId: Int!
+  parentCommentId: Int
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  name: String!
+}
