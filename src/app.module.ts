@@ -12,11 +12,14 @@ import { CommentModule } from './models/comment/comment.module';
 import { AuthModule } from './auth/auth.module';
 import { UploadModule } from './upload/upload.module';
 
-const caCertPath = path.join(process.cwd(), 'supabase-ca.crt');
 
-if (!fs.existsSync(caCertPath)) {
-  fs.writeFileSync(caCertPath, process.env.SUPABASE_CA_CERT!, { encoding: 'utf-8' });
-}
+const caCertPath = path.resolve(process.cwd(), 'certs', 'supabase-ca.crt');
+const sslOptions = fs.existsSync(caCertPath)
+  ? {
+    ca: fs.readFileSync(caCertPath),
+    rejectUnauthorized: true,
+  }
+  : undefined;
 
 @Module({
   imports: [
@@ -29,10 +32,7 @@ if (!fs.existsSync(caCertPath)) {
       entities: [User, Place, Comment, CommentVote],
       synchronize: false,
       autoLoadEntities: true,
-      ssl: {
-        ca: fs.readFileSync(path.resolve(process.cwd(), 'supabase-ca.crt')),
-        rejectUnauthorized: true,
-      },
+      ssl: sslOptions,
       extra: {
         keepAlive: true,
         max: 5,

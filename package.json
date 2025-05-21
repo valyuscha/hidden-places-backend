@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:dev:debug": "NODE_DEBUG=module nest start --watch",
+    "prestart:prod": "ts-node scripts/write-ca-if-needed.ts",
     "start:prod": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
