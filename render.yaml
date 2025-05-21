@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     buildCommand: npm install --legacy-peer-deps && npm run build
-    startCommand: npm run prestart:prod && npm run start:prod
+    startCommand: npm run prestart:prod && NODE_EXTRA_CA_CERTS=supabase-ca.crt npm run start:prod
     envVars:
       - key: DATABASE_URL
         value: postgresql://postgres.yrqgumlunftcjdgxmkcl:YWzMNRrTP8cxVUvx@aws-0-eu-central-1.pooler.supabase.com:5432/postgres?sslmode=require
