@@ -7,7 +7,7 @@ services:
     startCommand: npm run start:prod
     envVars:
       - key: DATABASE_URL
-        value: postgresql://postgres.yrqgumlunftcjdgxmkcl:YWzMNRrTP8cxVUvx@aws-0-eu-central-1.pooler.supabase.com:5432/postgres
+        value: postgresql://postgres.yrqgumlunftcjdgxmkcl:YWzMNRrTP8cxVUvx@aws-0-eu-central-1.pooler.supabase.com:5432/postgres?sslmode=require
       - key: JWT_SECRET
         value: f0aa2d5b9e6c4cda84dce24b1dc989f1f7c5e0917a9a445ca17f6aee7b9e3b3a
       - key: CLOUDINARY_API_KEY
