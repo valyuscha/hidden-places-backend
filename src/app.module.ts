@@ -26,6 +26,10 @@ import { UploadModule } from './upload/upload.module';
       synchronize: false,
       autoLoadEntities: true,
       ssl: { rejectUnauthorized: false },
+      extra: {
+        keepAlive: true,
+        max: 5,
+      },
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
