@@ -25,21 +25,10 @@ export class PlaceResolver {
   }
 
   @Mutation(() => Place)
-  async createPlace(
+  createPlace(
     @Args('createPlaceInput') createPlaceInput: CreatePlaceInput,
   ): Promise<Place> {
-    try {
-      return await this.placeService.create(createPlaceInput);
-    } catch (error) {
-      // Add the logMessage to the GraphQL error extensions
-      if (error.logMessage) {
-        error.extensions = {
-          ...error.extensions,
-          logMessage: error.logMessage
-        };
-      }
-      throw error;
-    }
+    return this.placeService.create(createPlaceInput);
   }
 
   @Mutation(() => Place)
