@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, IsNull, In, QueryFailedError } from 'typeorm';
+import { Repository, IsNull, In } from 'typeorm';
 import { Comment, Place, User, CommentVote } from '../../entities';
 import { CreateCommentInput, RepliesResponse, CommentsResponse } from '../../dto';
 
@@ -239,26 +239,8 @@ export class CommentService {
       vote.isLike = isLike;
       await this.voteRepo.save(vote);
     } else {
-      try {
-        vote = this.voteRepo.create({user, comment, isLike});
-        await this.voteRepo.save(vote);
-      } catch (err) {
-        if (err instanceof QueryFailedError && err.message.includes('duplicate key')) {
-          const existing = await this.voteRepo.findOneByOrFail({
-            user: {id: userId},
-            comment: {id: commentId},
-          });
-
-          if (existing.isLike === isLike) {
-            throw new BadRequestException('Already voted this way');
-          }
-
-          existing.isLike = isLike;
-          await this.voteRepo.save(existing);
-        } else {
-          throw err;
-        }
-      }
+      vote = this.voteRepo.create({ user, comment, isLike });
+      await this.voteRepo.save(vote);
     }
 
     const [likes, dislikes] = await Promise.all([
@@ -269,8 +251,8 @@ export class CommentService {
     comment.likes = likes;
     comment.dislikes = dislikes;
 
-    comment.hasUserLiked = vote?.isLike === true;
-    comment.hasUserDisliked = !vote?.isLike === false;
+    comment.hasUserLiked = vote.isLike;
+    comment.hasUserDisliked = !vote.isLike;
 
     return this.commentRepo.save(comment);
   }
