@@ -25,10 +25,16 @@ export class PlaceService {
       });
 
       console.log('[SUCCESSFULY CREATED PLACE]');
-      return this.placeRepo.save(place);
+
+      return await this.placeRepo.save(place);
     } catch (error) {
-      console.log('[CREATE PLACE ERROR]: ', error);
-      return error;
+      const errorMessage = '[CREATE PLACE ERROR]: ' + (error.message || JSON.stringify(error));
+      console.log(errorMessage);
+
+      // Create an error object with the log message
+      const errorObj = new Error(error.message || 'Failed to create place');
+      errorObj['logMessage'] = errorMessage;
+      throw errorObj;
     }
   }
 
