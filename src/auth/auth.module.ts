@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { UserModule } from '../models/user/user.module';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
+import { HealthController } from '../../health/health.controller';
 
 @Module({
   imports: [
@@ -20,5 +21,6 @@ import { GqlAuthGuard } from './guards/gql-auth.guard';
   ],
   providers: [AuthService, AuthResolver, JwtStrategy, GqlAuthGuard],
   exports: [GqlAuthGuard],
+  controllers: [HealthController],
 })
 export class AuthModule {}

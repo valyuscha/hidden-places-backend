@@ -41,7 +41,6 @@ export class AuthResolver {
 
       return true;
     } catch (err) {
-      console.error('[LOGIN ERROR]', err);
       return false;
     }
   }
