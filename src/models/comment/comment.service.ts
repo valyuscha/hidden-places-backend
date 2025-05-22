@@ -229,6 +229,7 @@ export class CommentService {
 
     let vote = await this.voteRepo.findOne({
       where: { user: { id: userId }, comment: { id: commentId } },
+      relations: ['user', 'comment'],
     });
 
     if (vote) {
