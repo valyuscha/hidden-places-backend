@@ -35,12 +35,13 @@ export class AuthResolver {
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
       return true;
     } catch (err) {
+      console.error('[LOGIN ERROR]', err);
       return false;
     }
   }
@@ -60,7 +61,7 @@ export class AuthResolver {
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
@@ -77,7 +78,7 @@ export class AuthResolver {
     res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'none',
     });
 
     return true;
