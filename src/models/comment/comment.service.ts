@@ -271,7 +271,7 @@ export class CommentService {
     comment.dislikes = dislikes;
 
     comment.hasUserLiked = vote?.isLike === true;
-    comment.hasUserDisliked = vote?.isLike === false;
+    comment.hasUserDisliked = !vote?.isLike === false;
 
     return this.commentRepo.save(comment);
   }
