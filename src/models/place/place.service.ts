@@ -16,14 +16,20 @@ export class PlaceService {
   ) {}
 
   async create(data: CreatePlaceInput): Promise<Place> {
-    const user = await this.userRepo.findOneByOrFail({ id: data.createdById });
+    try {
+      const user = await this.userRepo.findOneByOrFail({id: data.createdById});
 
-    const place = this.placeRepo.create({
-      ...data,
-      createdBy: user,
-    });
+      const place = this.placeRepo.create({
+        ...data,
+        createdBy: user,
+      });
 
-    return this.placeRepo.save(place);
+      console.log('[SUCCESSFULY CREATED PLACE]');
+      return this.placeRepo.save(place);
+    } catch (error) {
+      console.log('[CREATE PLACE ERROR]: ', error);
+      return error;
+    }
   }
 
   async findAll(
