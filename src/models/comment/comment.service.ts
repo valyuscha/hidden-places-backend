@@ -50,6 +50,15 @@ export class CommentService {
       ...(parentComment ? { parentComment } : {}),
     });
 
+    console.log('Creating comment with:', {
+      text: data.text,
+      userId: user.id,
+      placeId: place.id,
+      parentCommentId: parentComment?.id,
+    });
+
+    console.log('Entity before save:', comment);
+
     return this.commentRepo.save(comment);
   }
 
