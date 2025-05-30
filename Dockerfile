@@ -14,6 +14,6 @@ RUN npm run build
 
 RUN npm run prestart:prod
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD NODE_EXTRA_CA_CERTS=supabase-ca.crt npm run start:prod
