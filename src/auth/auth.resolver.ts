@@ -32,10 +32,12 @@ export class AuthResolver {
       const token = loginData?.access_token;
       const res: Response = context.res;
 
+      const sameSiteValue = process.env.NODE_ENV === 'production' ? 'none' : 'lax';
+
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        secure: process.env.NODE_ENV === 'production' || sameSiteValue === 'none',
+        sameSite: sameSiteValue,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
@@ -58,10 +60,12 @@ export class AuthResolver {
       const token = loginData?.access_token;
       const res: Response = context.res;
 
+      const sameSiteValue = process.env.NODE_ENV === 'production' ? 'none' : 'lax';
+
       res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        secure: process.env.NODE_ENV === 'production' || sameSiteValue === 'none',
+        sameSite: sameSiteValue,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
@@ -74,11 +78,12 @@ export class AuthResolver {
   @Mutation(() => Boolean)
   logout(@Context() context): boolean {
     const res: Response = context.res;
+    const sameSiteValue = process.env.NODE_ENV === 'production' ? 'none' : 'lax';
 
     res.clearCookie('token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'production' || sameSiteValue === 'none',
+      sameSite: sameSiteValue,
     });
 
     return true;

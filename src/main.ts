@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: ['http://localhost:3000', 'https://hidden-places-45d3.vercel.app', 'https://hidden-places.vercel.app'],
+    origin: ['http://localhost:3000', 'https://gradual-maisie-valentyna-fd6e6775.koyeb.app'],
     credentials: true,
   });
 
