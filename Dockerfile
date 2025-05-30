@@ -16,4 +16,6 @@ RUN npm run prestart:prod
 
 EXPOSE 80
 
-CMD NODE_EXTRA_CA_CERTS=supabase-ca.crt npm run start:prod
+ENV NODE_EXTRA_CA_CERTS=./supabase-ca.crt
+
+CMD ["npm", "run", "start:prod"]
