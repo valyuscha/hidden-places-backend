@@ -16,10 +16,15 @@ export class UserService {
   }
 
   findUserWithRelations(id: number): Promise<User | null> {
-    return this.userRepo.findOne({
-      where: { id },
-      relations: ['places', 'comments', 'comments.place'],
-    });
+    return this.userRepo
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.places', 'places')
+      .leftJoinAndSelect('user.comments', 'comments')
+      .leftJoinAndSelect('comments.place', 'place')
+      .where('user.id = :id', { id })
+      .orderBy('places.createdAt', 'DESC')
+      .addOrderBy('comments.createdAt', 'DESC')
+      .getOne();
   }
 
   async findByEmail(email: string): Promise<User | null> {

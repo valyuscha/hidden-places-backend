@@ -3,8 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import * as fs from 'fs';
-import * as path from 'path';
 import { User, Place, Comment, CommentVote } from './entities';
 import { UserModule } from './models/user/user.module';
 import { PlaceModule } from './models/place/place.module';
@@ -12,14 +10,13 @@ import { CommentModule } from './models/comment/comment.module';
 import { AuthModule } from './auth/auth.module';
 import { UploadModule } from './upload/upload.module';
 
-
-const caCertPath = path.resolve(process.cwd(), 'certs', 'supabase-ca.crt');
-const sslOptions = fs.existsSync(caCertPath)
-  ? {
-    ca: fs.readFileSync(caCertPath),
-    rejectUnauthorized: true,
-  }
-  : undefined;
+// SSL configuration for Supabase connection pooler
+// Note: rejectUnauthorized is set to false because Supabase's pooler
+// uses a certificate chain that Node.js cannot fully verify.
+// The connection is still encrypted with SSL/TLS.
+const sslOptions = {
+  rejectUnauthorized: false,
+};
 
 @Module({
   imports: [

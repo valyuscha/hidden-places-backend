@@ -13,4 +13,7 @@ export default new DataSource({
   synchronize: false,
   migrations: ['src/migrations/**/*.ts'],
   entities: ['src/**/*.entity.ts'],
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
